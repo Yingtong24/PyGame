@@ -52,5 +52,11 @@ while over==True:
             c1.grow(5)
             c2.grow(10)
             c3.grow(15)
-            c4.grow(20)
+            c4.grow(20 )
+            pygame.display.update()
+
+        elif event.type==pygame.MOUSEMOTION:
+            position=pygame.mouse.get_pos()
+            cir=shapes("light blue", position, 7)
+            cir.draw()
             pygame.display.update()
