@@ -34,15 +34,14 @@ while True:
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             pygame.quit()
-    event=pygame.event.poll()
-    if event.type==pygame.MOUSEBUTTONDOWN:
-            pos=pygame.mouse.get_pos()
-            pygame.draw.circle(screen, "blue", (pos), 12.5, 0)
-            pygame.display.update()
-    if event.type==pygame.MOUSEBUTTONUP:
-            pos2=pygame.mouse.get_pos()
-            pygame.draw.line(screen, "blue", (pos), (pos2), 5)
-            pygame.draw.circle(screen, "blue", (pos2), 12.5, 0)
-            pygame.display.update()
-
+    #event=pygame.event.poll()
+        elif event.type==pygame.MOUSEBUTTONDOWN:
+                pos=pygame.mouse.get_pos()
+                pygame.draw.circle(screen, "blue", (pos), 12.5, 0)
+                pygame.display.update()
+        elif event.type==pygame.MOUSEBUTTONUP:
+                pos2=pygame.mouse.get_pos()
+                pygame.draw.line(screen, "blue", (pos), (pos2), 5)
+                pygame.draw.circle(screen, "blue", (pos2), 12.5, 0)
+                pygame.display.update()
         
