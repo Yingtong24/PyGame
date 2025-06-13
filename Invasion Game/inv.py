@@ -37,6 +37,42 @@ class ducks(pygame.sprite.Sprite):
         self.rect.move_ip(0, speed)
         if self.rect.top<=0 or self.rect.bottom>=800:
             self.rect.move_ip(0,-speed)
+#Function for Bullets
+ldbullet=[]
+rdbullet=[]
+def bullet():
+    for bullets in ldbullet:
+        pygame.draw.rect(screen, "brown", bullets)
+        bullets.x+=5
+    for bullets in rdbullet:
+        pygame.draw.rect(screen,"brown", bullets)
+        bullets.x-=5
+#Function for Damage
+lefthit=pygame.USEREVENT+1
+righthit=pygame.USEREVENT+2
+def collide():
+    global lftduckh, rghtduckh
+    for bullets in ldbullet:
+        if rghtduck.rect.colliderect(bullets):
+            rghtduckh-=2
+            ldbullet.remove(bullets)
+        elif bullets.x>1000:
+            ldbullet.remove(bullets)
+
+    for bullets in rdbullet:
+        if lftduck.rect.colliderect(bullets):
+            lftduckh-=2
+            rdbullet.remove(bullets)
+        elif bullets.x>1000:
+            rdbullet.remove(bullets)
+    
+    #Bullets collide together
+    for bullet1 in ldbullet:
+        for bullet2 in rdbullet:
+            if bullet1.colliderect(bullet2):
+                ldbullet.remove(bullet1)
+            if bullet2.colliderect(bullet1):
+                rdbullet.remove(bullet2)
 
 lftduck = ducks(lduck, 100, 400, speed=2)
 rghtduck = ducks(rduck, 750, 400, speed=-3)
@@ -48,8 +84,18 @@ while run:
     for event in pygame.event.get():
         if event.type==QUIT:
             pygame.quit()
-    press=pygame.key.get_pressed()
+        #Bullet creation
+        if event.type==KEYDOWN:
+            if event.key==K_LCTRL:
+                bullets=pygame.Rect(lftduck.rect.x+lftduck.rect.width, lftduck.rect.y+lftduck.rect.height//2,10,5)
+                ldbullet.append(bullets)
+            if event.key==K_RCTRL:
+                bullets=pygame.Rect(rghtduck.rect.x, rghtduck.rect.y+rghtduck.rect.height//2,10,5)
+                rdbullet.append(bullets)
+        #if event.type==lefthit:
 
+    press=pygame.key.get_pressed()
+    
     #Player 1
     if press[K_a]:
         lftduck.hmove(-5, 1)
@@ -78,4 +124,18 @@ while run:
 
     pygame.draw.rect(screen, "yellow", border)
     sgroup.draw(screen)
+    bullet()
+    collide()
+    if lftduckh<=0:
+        txt=winfnt.render("Game over, right duck wins!!!", 1, "Black")
+        screen.blit(txt, (600,10))
+        pygame.display.update()
+        pygame.time.delay(10000)
+        run=False
+    if rghtduckh<=0:
+        txt=winfnt.render("Game over, left duck wins!!!", 1, "Black")
+        screen.blit(txt, (200,10))
+        pygame.display.update()
+        pygame.time.delay(10000)
+        run=False
     pygame.display.update()
