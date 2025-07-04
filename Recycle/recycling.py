@@ -88,6 +88,8 @@ while run:
         if keys[pygame.K_DOWN]:
             if bin2.rect.y<1000:
                 bin2.rect.y+=5
+
+
 #Checking Collision
         #Recyclable Group
         recyclehit=pygame.sprite.spritecollide(bin2, rcyble, True)
@@ -103,5 +105,5 @@ while run:
         screen.blit(text,(0,0))
 
         asprite.draw(screen)
-        pygame.display.update()
+    pygame.display.update()
 pygame.quit()
