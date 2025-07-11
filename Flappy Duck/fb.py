@@ -40,8 +40,8 @@ class Bird(pygame.sprite.Sprite):
         for i in range(1,4):
             img=pygame.image.load(f"bird{i}.png")
             self.images.append(img)
-        self.im=self.images[self.index]
-        self.rect=self.im.get_rect()
+        self.image=self.images[self.index]
+        self.rect=self.image.get_rect()
         self.rect.center=[x, y]
         self.vel=0
         self.clicked=False
